@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     adress:{
         type:String
     
+    },
+    email:{
+        type:String,
+
     }
 
 
