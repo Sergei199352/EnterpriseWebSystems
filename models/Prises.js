@@ -11,6 +11,6 @@ const prisesSchema = new mongoose.Schema({
     }
 });
 
-const Tickets = mongoose.model('Prisest', prisesSchema);
+const Prises = mongoose.model('Prise', prisesSchema);
 
 module.exports = Prises;
