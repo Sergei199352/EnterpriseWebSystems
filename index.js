@@ -5,10 +5,15 @@ const app = express();
 const path  = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
+
+
+
 
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+
 
 
 
@@ -42,10 +47,13 @@ app.use(session(sessionConfig))
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
+
 // passport setup
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash())
 app.use('/', userRounts)
+
 
 passport.use(new LocalStrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
