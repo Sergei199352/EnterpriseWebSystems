@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 
 const session = require('express-session');
 const passport = require('passport');
-const localStrategy = require('passport-local');
+const LocalStrategy = require('passport-local');
 
 
 
@@ -17,6 +17,9 @@ const localStrategy = require('passport-local');
 const Tickets = require('./models/Tickets')
 const Prises = require('./models/Prises')
 const Users = require('./models/Users')
+
+
+const userRounts = require('./routes/users')
 
 // setting the ejs engine and other app.use middlewares
 
@@ -39,9 +42,14 @@ app.use(session(sessionConfig))
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
-app.use(passport.initialize);
-app.use(passport.session)
+// passport setup
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/', userRounts)
 
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
 // connecting to mongo
 
@@ -52,3 +60,16 @@ mongoose.connect('mongodb://localhost:27017/webSistems')
     console.log('MOngo errorrrrr')
     console.log(err)
 });
+
+app.get('/fu', async (req,res) =>{
+    const user = new Users({email:'sergey@example.com',username:'cotttt', adress:'viva la vida loca'});
+    const newUser = await Users.register(user, "chicken");
+    res.send(newUser)
+})
+// /register
+
+
+
+app.listen(3000, () => {
+    console.log('app is listeniong on port 3000')
+})

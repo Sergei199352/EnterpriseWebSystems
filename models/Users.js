@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose')
+const passportLocalMongoose = require('passport-local-mongoose');
+
 
 const userSchema = new mongoose.Schema({
 
@@ -10,6 +11,10 @@ const userSchema = new mongoose.Schema({
     email:{
         type:String,
 
+    },
+    priseOwner:{
+        type:Boolean,
+        default:false
     }
 
 
