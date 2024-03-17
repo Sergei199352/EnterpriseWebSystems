@@ -1,4 +1,7 @@
 
+
+// the whole project was created by following the udemy course https://www.udemy.com/course/the-web-developer-bootcamp
+
 // adding the required packages
 const express = require('express');
 const app = express();
@@ -53,10 +56,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash())
 // flash middleware
-app.use((req,res,next) =>{
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    next()
+    next();
 })
 
 app.use('/', userRounts)
