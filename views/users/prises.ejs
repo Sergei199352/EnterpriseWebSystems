@@ -1,0 +1,80 @@
+<!-- this page was made by following the tutorial on udemy  https://www.udemy.com/course/the-web-developer-bootcamp -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head')%>
+
+
+<body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar')%>
+    <main class="container mt-5">
+        <%- include('../partials/flash')%>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                
+                <div class="card-body">
+                    <h5 class="card-title">Add Prise</h5>
+                    <form action="/addPrise" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="prise">Prise Name</label>
+                            <input class="form-control" type="text" id="prise" name="prise" required autofocus>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="prise">Prise Name</label>
+                            <input class="form-control" type="text" id="prise" name="prise" required autofocus>
+                            
+                        </div>
+                        <div  class="mb-3">
+                            <label for="date">Select Date:</label>
+                            <input type="date" id="date" name="date" class="form-control">
+                            
+                        </div>
+                        <div class="mb-3">
+                            
+                            <label for="time">Select Time:</label>
+                            <input type="time" id="time" name="time" class="form-control">
+
+
+                        </div>
+                        <div  class="mb-3">
+
+                            <select name="category" id="category" class="form-select">
+
+                                <% for (let category of categories) {%>
+                    
+                                    <option value="<%= category %>"><%= category %></option>
+                    
+                    
+                                    <% } %>
+                    
+                            </select>
+
+
+                        </div>
+                        
+    
+   
+                        <button class="btn btn-success btn-block">Register</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    <%- include('../partials/footer')%>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+
+    
+</body>
+
+</html>

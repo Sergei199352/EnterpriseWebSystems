@@ -4,25 +4,24 @@ const passport = require('passport')
 const User = require('../models/Users')
 const catchAsync = require('../utils/catchAsync')
 const {isLoggedIn} = require('../middleware')
-const {prizeOwner} = require('../middleware')
+const {authPrizeOwner} = require('../middleware')
+
+const categories = ['Car', 'Phone', 'Ticket', 'Other'];
 router.get('/register', (req,res)=>{
     res.render('users/register')
 });
-router.post('/register', catchAsync(async (req,res) =>{
-
-    try{
-
-    const { email, username, password } = req.body;
-    const user = new User({ email, username });
-    const registeredUser = await User.register(user, password);
-    console.log(registeredUser);
-    res.redirect('/login');
-    }catch(e){
-        req.flash('error',e.message)
-        res.redirect('/register')
+router.post('/register', catchAsync(async (req, res) => {
+    try {
+        const { email, username, password, priseOwner, adress } = req.body;
+        const user = new User({ email, username, priseOwner: priseOwner === 'true', adress });
+        const registeredUser = await User.register(user, password);
+        console.log(registeredUser);
+        req.flash('success', 'Registration successful. Please log in.');
+        res.redirect('/login');
+    } catch(e) {
+        req.flash('error', e.message);
+        res.redirect('/register');
     }
-    
-    
 }));
 // profile get route
 
@@ -33,6 +32,12 @@ router.get('/profile', isLoggedIn, (req, res) =>{
     res.render('users/profile')
 
 });
+// add prise get method
+
+router.get('/addPrise', (req,res) =>{
+    res.render('users/prises', {categories})
+})
+
 
 // login get route
 
