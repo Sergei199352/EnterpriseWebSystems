@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport')
 const User = require('../models/Users')
 const catchAsync = require('../utils/catchAsync')
+const {isLoggedIn} = require('../middleware')
+const {prizeOwner} = require('../middleware')
 router.get('/register', (req,res)=>{
     res.render('users/register')
 });
@@ -14,7 +16,7 @@ router.post('/register', catchAsync(async (req,res) =>{
     const user = new User({ email, username });
     const registeredUser = await User.register(user, password);
     console.log(registeredUser);
-    res.redirect('/register');
+    res.redirect('/login');
     }catch(e){
         req.flash('error',e.message)
         res.redirect('/register')
@@ -22,6 +24,17 @@ router.post('/register', catchAsync(async (req,res) =>{
     
     
 }));
+// profile get route
+
+router.get('/profile', isLoggedIn, (req, res) =>{
+
+
+    
+    res.render('users/profile')
+
+});
+
+// login get route
 
 router.get('/login', (req, res) =>{
 
