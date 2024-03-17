@@ -83,6 +83,11 @@ app.get('/fu', async (req,res) =>{
 })
 // /register
 
+app.get('/',(req, res)=>{
+    
+    res.render('mainPage')
+})
+
 
 
 app.listen(3000, () => {

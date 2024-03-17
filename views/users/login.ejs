@@ -1,0 +1,19 @@
+<%- include('../partials/flash') %>
+
+<h1>Login</h1>
+<form action="/login" method="post" class = "validated-form" novalidate>
+    
+    <div>
+    <label for="username">Usename</label>
+    <input type="text" id="username" name="username" required>
+</div>
+
+<div>
+    <label for="password" > Password</label>
+    <input type="password" name="password" id="password" required>
+</div>
+
+<button>Login</button>
+
+
+</form>
