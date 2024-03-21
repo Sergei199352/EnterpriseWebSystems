@@ -145,6 +145,25 @@ app.get('/prise/:id', async (req, res) => {
         res.redirect('/');
     }
 });
+app.get('/findTicket', (req, res) =>{
+    res.render('findTicket', ticketData = null)
+})
+// getting the ticket from the mongo
+app.post('/findTicket', async (req, res) => {
+    try {
+        const { ticketId } = req.body;
+        const ticket = await Tickets.findOne({ ticketId }); // Find ticket by ticketId
+        if (!ticket) {
+            req.flash('error', 'Ticket not found');
+            return res.redirect('/findTicket'); // Redirect to the find ticket page
+        }
+        res.render('ticketDetails', { ticketData: ticket }); // Render the ticket details page with the retrieved ticket data
+    } catch (error) {
+        console.error('Error finding ticket:', error);
+        req.flash('error', 'Error finding ticket');
+        res.redirect('/findTicket'); // Redirect to the find ticket page
+    }
+});
 
 
 
