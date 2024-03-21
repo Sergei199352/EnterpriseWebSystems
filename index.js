@@ -146,7 +146,7 @@ app.get('/prise/:id', async (req, res) => {
     }
 });
 app.get('/findTicket', (req, res) =>{
-    res.render('findTicket', ticketData = null)
+    res.render('findTicket')
 })
 // getting the ticket from the mongo
 app.post('/findTicket', async (req, res) => {
@@ -157,6 +157,7 @@ app.post('/findTicket', async (req, res) => {
             req.flash('error', 'Ticket not found');
             return res.redirect('/findTicket'); // Redirect to the find ticket page
         }
+        req.flash('success', 'Prise found')
         res.render('ticketDetails', { ticketData: ticket }); // Render the ticket details page with the retrieved ticket data
     } catch (error) {
         console.error('Error finding ticket:', error);
@@ -165,6 +166,22 @@ app.post('/findTicket', async (req, res) => {
     }
 });
 
+app.post('/deleteTicket', async (req, res) => {
+    try {
+        const { ticketId } = req.body;
+        const ticket = await Tickets.findOneAndDelete({ ticketId }); // Find ticket by ticketId
+        if (!ticket) {
+            req.flash('error', 'Ticket not found');
+            return res.redirect('/findTicket'); // Redirect to the find ticket page
+        }
+        req.flash('success', 'Ticket Removed')
+        res.redirect('/')
+    } catch (error) {
+        console.error('Error finding ticket:', error);
+        req.flash('error', 'Error finding ticket');
+        res.redirect('/findTicket'); // Redirect to the find ticket page
+    }
+});
 
 
 app.listen(3000, () => {

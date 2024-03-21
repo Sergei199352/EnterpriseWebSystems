@@ -14,8 +14,25 @@
                 <p class="card-text"><strong>Ticket ID:</strong> <%= ticketData.ticketId %></p>
                 <p class="card-text"><strong>Prise Date:</strong> <%= ticketData.priseDate %></p>
                 <p class="card-text"><strong>Prise Category:</strong> <%= ticketData.priseCategory %></p>
-                <p class="card-text"><strong>Prise ID:</strong> <%= ticketData.priseId %></p>
+                <a href="/prise/<%= ticketData.priseId %>" class="btn btn-primary me-2">View Prize</a>
+                
             </div>
+        
+        </div>
+        <div class= 'mb-3'>
+            <div class="card-body">
+
+                <!-- ticket lookup form -->
+                <form action="/deleteTicket" method="POST">
+                    <div class="mb-3">
+                        <input type="hidden" name="ticketId" value="<%= ticketData.ticketId  %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Delete Ticket</button>
+                </form>
+            
+                
+            </div>
+
         </div>
     </main>
     <%- include('partials/footer') %>
