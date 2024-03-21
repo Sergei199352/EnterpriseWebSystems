@@ -7,6 +7,40 @@
     <%- include('partials/navbar')%>
     <main class="container mt-5">
         <%- include('partials/flash')%>
+        <div class="container mt-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <% prises.forEach(prise => { %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Gift by <%= prise.username %></h5>
+                                <p class="card-text"><strong>Prize:</strong> <%= prise.prise %></p>
+                                <p class="card-text"><strong>Date:</strong> <%= prise.priseDate %></p>
+                                <p class="card-text"><strong>Time:</strong> <%= prise.priseTime %></p>
+                                <p class="card-text"><strong>Category:</strong> <%= prise.priseCategory %></p>
+                                <!-- Link to prize page -->
+                                <div class="mb-3">
+                                    <a href="/prise/<%= prise._id %>" class="btn btn-primary me-2">View Prize</a>
+                                    <!-- Form to create ticket -->
+                                    <form action="/createTicket" method="POST" class="d-inline">
+                                        <input type="hidden" name="username" value="<%= prise.username %>">
+                                        <input type="hidden" name="prise" value="<%= prise.prise %>">
+                                        <input type="hidden" name="ticketId" value="<%= prise.ticketId %>">
+                                        <input type="hidden" name="priseDate" value="<%= prise.priseDate %>">
+                                        <input type="hidden" name="priseCategory" value="<%= prise.priseCategory %>">
+                                        <input type="hidden" name="priseId" value="<%= prise._id %>">
+                                        <button type="submit" class="btn btn-primary">Create Ticket</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        
+        
+        
         
     </main>
     <%- include('partials/footer')%>
@@ -17,7 +51,8 @@
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
         crossorigin="anonymous"></script>
 
-    
+        
+        
 </body>
 
 </html>

@@ -87,10 +87,64 @@ app.get('/fu', async (req,res) =>{
 })
 // /register
 
-app.get('/',(req, res)=>{
+app.get('/',async (req, res)=>{
+
+    const prises = await Prises.find({})
     
-    res.render('mainPage')
+    res.render('mainPage', {prises})
 })
+// chatgbt generated
+function generateTicketId(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let ticketId = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        ticketId += characters.charAt(randomIndex);
+    }
+    return ticketId;
+}
+
+// Route to handle the creation of a new ticket
+app.post('/createTicket', (req, res) => {
+    // Extract the username from the current user object
+    const username = req.user ? req.user.username : 'Guest'; // If no user is logged in, set username to 'Anonymous'
+
+    // Generate a ticket ID
+    const ticketId = generateTicketId(6);
+
+    // Extract ticket data from the request body
+    const ticketData = {
+        ...req.body,
+        username: username,
+        ticketId: ticketId
+    };
+
+    // Create a new ticket with the provided data
+    Tickets.create(ticketData)
+        .then(ticket => {
+            req.flash('success', `Ticket created successfully your ticked Id is ${ticketId}` );
+            res.redirect('/'); // Redirect to the homepage or any other page
+        })
+        .catch(err => {
+            console.error('Error creating ticket:', err);
+            res.status(500).send('Error creating ticket');
+        });
+});
+
+app.get('/prise/:id', async (req, res) => {
+    try {
+        const prise = await Prises.findById(req.params.id);
+        if (!prise) {
+            req.flash('error', 'Prize not found');
+            return res.redirect('/');
+        }
+        res.render('priseDetails', { prise });
+    } catch (error) {
+        console.error('Error retrieving prize details:', error);
+        req.flash('error', 'Error retrieving prize details');
+        res.redirect('/');
+    }
+});
 
 
 

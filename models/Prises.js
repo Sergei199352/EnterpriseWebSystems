@@ -5,6 +5,7 @@ const prisesSchema = new mongoose.Schema({
     username:{type:String},
     prise:{type:String},
     priseDate: {type: String},
+    priseTime:{type:String},
     priseCategory:{
         type:String,
         enum:['Car', 'Phone', 'Ticket', 'Other']

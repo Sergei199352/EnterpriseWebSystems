@@ -8,10 +8,12 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/">Prises</a>
+                
                 <% if(currentUser){ %>
-                <a class="nav-link" href="/">Profile</a>
+                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link" href="/addPrise">Prises</a>
                 <% } %>
+               
             </div>
             <div class="navbar-nav ml-auto">
                

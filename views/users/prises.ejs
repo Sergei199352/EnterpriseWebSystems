@@ -17,47 +17,35 @@
                 <div class="card-body">
                     <h5 class="card-title">Add Prise</h5>
                     <form action="/addPrise" method="POST" class="validated-form" novalidate>
+                        
                         <div class="mb-3">
                             <label class="form-label" for="prise">Prise Name</label>
                             <input class="form-control" type="text" id="prise" name="prise" required autofocus>
                             
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="prise">Prise Name</label>
-                            <input class="form-control" type="text" id="prise" name="prise" required autofocus>
-                            
+                            <label for="priseDate">Select Date:</label>
+                            <input type="date" id="priseDate" name="priseDate" class="form-control">
                         </div>
-                        <div  class="mb-3">
-                            <label for="date">Select Date:</label>
-                            <input type="date" id="date" name="date" class="form-control">
-                            
-                        </div>
+                        
                         <div class="mb-3">
-                            
-                            <label for="time">Select Time:</label>
-                            <input type="time" id="time" name="time" class="form-control">
-
-
+                            <label for="priseTime">Select Time:</label>
+                            <input type="time" id="priseTime" name="priseTime" class="form-control">
                         </div>
-                        <div  class="mb-3">
-
-                            <select name="category" id="category" class="form-select">
-
-                                <% for (let category of categories) {%>
-                    
+                        
+                        <div class="mb-3">
+                            <label for="priseCategory">Select Category:</label>
+                            <select name="priseCategory" id="priseCategory" class="form-select">
+                                <% for (let category of categories) { %>
                                     <option value="<%= category %>"><%= category %></option>
-                    
-                    
-                                    <% } %>
-                    
+                                <% } %>
                             </select>
-
-
                         </div>
+                        
                         
     
    
-                        <button class="btn btn-success btn-block">Register</button>
+                        <button class="btn btn-success btn-block">Add Prise</button>
                     </form>
 
                 </div>
