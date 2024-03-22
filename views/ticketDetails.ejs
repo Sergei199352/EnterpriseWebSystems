@@ -9,7 +9,16 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Ticket Details</h5>
-                <p class="card-text"><strong>Username:</strong> <%= ticketData.username %></p>
+                
+                                <% if(!ticketData.priseActive){ %>
+                                    <p class="card-text"><strong>Prize No longer Active</strong> </p>
+                                    <% if(ticketData.winner){ %>
+                                        <p class="card-text"><strong>You won</strong> </p>
+                                        <% }else{ %>
+                                            <p class="card-text"><strong>You lost. Better luck next time</strong> </p>
+                                            <% } %>
+                                            <% } %>
+
                 <p class="card-text"><strong>Prise:</strong> <%= ticketData.prise %></p>
                 <p class="card-text"><strong>Ticket ID:</strong> <%= ticketData.ticketId %></p>
                 <p class="card-text"><strong>Prise Date:</strong> <%= ticketData.priseDate %></p>

@@ -20,6 +20,11 @@ const ticketSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     
+    },
+    priseActive:{
+        type:Boolean,
+        default:true
+    
     }
 });
 

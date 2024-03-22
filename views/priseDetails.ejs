@@ -23,8 +23,15 @@
                     <!-- Form to create ticket -->
                     <form action="/createTicket" method="POST" class="d-inline">
                         <div class="mb-3">
-                            <label class="form-label" for="email">Email</label>
-                            <input class="form-control" type="email" id="email" name="email" required>
+                            <!-- Check if currentUser exists -->
+                            <% if (currentUser) { %>
+                                <!-- Hide the email input field -->
+                                <input type="hidden" name="email" value="<%= currentUser.email %>">
+                            <% } else { %>
+                                <!-- Show the email input field -->
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" id="email" name="email" required>
+                            <% } %>
                             
                         </div>
                         <input type="hidden" name="username" value="<%= prise.username %>">

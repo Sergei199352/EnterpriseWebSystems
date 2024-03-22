@@ -1,4 +1,93 @@
-<%- include('../partials/flash') %>
+<!-- this page was made by following the tutorial on udemy  https://www.udemy.com/course/the-web-developer-bootcamp -->
 
-<h1>Profile</h1>
-f
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head')%>
+
+
+<body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar')%>
+    <main class="container mt-5">
+        <%- include('../partials/flash')%>
+
+        <!-- User Prizes Section -->
+        <% if (isOwner) {%>
+        <div class="container mt-5">
+            
+            <h2 class="mb-4">Your Entered Prizes</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <% currentUserPrises.forEach(prize => { %>
+                    <% if(!prize.draw){ %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Gift by <%= prize.username %></h5>
+                                <p class="card-text"><strong>Prize:</strong> <%= prize.prise %></p>
+                                <p class="card-text"><strong>Date:</strong> <%= prize.priseDate %></p>
+                                <p class="card-text"><strong>Time:</strong> <%= prize.priseTime %></p>
+                                <p class="card-text"><strong>Category:</strong> <%= prize.priseCategory %></p>
+                                <form action="/selectWinner" method="POST" class="validated-form" novalidate>
+                                    <div class="mb-3">
+                                        <button class="btn btn-success btn-block">Choose winner</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <%  }%>
+                <% }) %>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- User Tickets Section -->
+        <div class="container mt-5">
+            <h2 class="mb-4">Your Tickets</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <% currentUserTickets.forEach(ticket => { %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Ticket ID: <%= ticket.ticketId %></h5>
+                                <% if(!ticket.priseActive){ %>
+                                    <p class="card-text"><strong>Prize No longer Active</strong> </p>
+                                    <% if(ticket.winner){ %>
+                                        <p class="card-text"><strong>You won</strong> </p>
+                                        <% }else{ %>
+                                            <p class="card-text"><strong>You lost. Better luck next time</strong> </p>
+                                            <% } %>
+                                            <% } %>
+
+
+                                <div class="mb-3">
+                                <a href="/prise/<%= ticket.priseId %>" class="btn btn-primary me-2">View Prize</a>
+                                <form action="/deleteTicket" method="POST">
+                                    <div class="mb-3">
+                                        <input type="hidden" name="ticketId" value="<%= ticket.ticketId  %>">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Delete Ticket</button>
+                                </form>
+                                </div>
+                               
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                <% }) %>
+            </div>
+        </div>
+
+    </main>
+    <%- include('../partials/footer')%>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+
+    
+</body>
+
+</html>

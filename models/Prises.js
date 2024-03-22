@@ -9,7 +9,8 @@ const prisesSchema = new mongoose.Schema({
     priseCategory:{
         type:String,
         enum:['Car', 'Phone', 'Ticket', 'Other']
-    }
+    },
+    draw:{type:Boolean, default:false}
 });
 
 const Prises = mongoose.model('Prise', prisesSchema);

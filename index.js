@@ -57,6 +57,7 @@ app.use(passport.session());
 app.use(flash())
 // flash middleware
 app.use((req, res, next) => {
+    res.locals.isOwner= req.user ? req.user.priseOwner : false;
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
