@@ -16,9 +16,28 @@
                 <p><strong>Time:</strong> <%= prise.priseTime %></p>
                 <p><strong>Category:</strong> <%= prise.priseCategory %></p>
                 <p><strong>Username:</strong> <%= prise.username %></p>
-                <!-- Add a link back to the homepage -->
+               
+                <div class="mb-3">
+                     <!-- Add a link back to the homepage -->
                 <a href="/" class="btn btn-primary">Back to Homepage</a>
+                    <!-- Form to create ticket -->
+                    <form action="/createTicket" method="POST" class="d-inline">
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" required>
+                            
+                        </div>
+                        <input type="hidden" name="username" value="<%= prise.username %>">
+                        <input type="hidden" name="prise" value="<%= prise.prise %>">
+                        <input type="hidden" name="ticketId" value="<%= prise.ticketId %>">
+                        <input type="hidden" name="priseDate" value="<%= prise.priseDate %>">
+                        <input type="hidden" name="priseCategory" value="<%= prise.priseCategory %>">
+                        <input type="hidden" name="priseId" value="<%= prise._id %>">
+                        <button type="submit" class="btn btn-primary">Create Ticket</button>
+                    </form>
+                </div>
             </div>
+            
         </div>
         
     </main>

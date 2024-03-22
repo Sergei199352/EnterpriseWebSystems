@@ -10,7 +10,17 @@ const ticketSchema = new mongoose.Schema({
         type:String,
         enum:['Car', 'Phone', 'Ticket', 'Other']
     },
-    priseId:{type:String}
+    priseId:{type:String},
+    email:{
+        type:String,
+        default:'No email'
+    
+    },
+    winner:{
+        type:Boolean,
+        default:false
+    
+    }
 });
 
 const Tickets = mongoose.model('Ticket', ticketSchema);

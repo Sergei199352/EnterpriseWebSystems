@@ -22,15 +22,7 @@
                                 <div class="mb-3">
                                     <a href="/prise/<%= prise._id %>" class="btn btn-primary me-2">View Prize</a>
                                     <!-- Form to create ticket -->
-                                    <form action="/createTicket" method="POST" class="d-inline">
-                                        <input type="hidden" name="username" value="<%= prise.username %>">
-                                        <input type="hidden" name="prise" value="<%= prise.prise %>">
-                                        <input type="hidden" name="ticketId" value="<%= prise.ticketId %>">
-                                        <input type="hidden" name="priseDate" value="<%= prise.priseDate %>">
-                                        <input type="hidden" name="priseCategory" value="<%= prise.priseCategory %>">
-                                        <input type="hidden" name="priseId" value="<%= prise._id %>">
-                                        <button type="submit" class="btn btn-primary">Create Ticket</button>
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
