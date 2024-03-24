@@ -7,13 +7,13 @@ The website should have the functionality to extend the single raffle:
     • Allow raffle holders to add details of new raffle prizes. This should use a database. The active raffle prizes should be displayed on the website. DONE
     • Have functionality where a single “winner” is drawn at random and displayed on the website. This functionality could be triggered by a raffle holder via a user interface or API call. DONE
 The website could have the functionality to run more than one raffle:
-    • Allow ordinary users to remove themselves from a raffle.Done
-    • Allow ordinary users to enter a particular raffle multiple times (with their chances of winning suitably increased).Done
-    • Alert winners to their unclaimed winnings when they log in.
-    • Run multiple raffles with multiple raffle holders and with different draw times.
+    • Allow ordinary users to remove themselves from a raffle.DONE
+    • Allow ordinary users to enter a particular raffle multiple times (with their chances of winning suitably increased).DONE
+    • Alert winners to their unclaimed winnings when they log in. DONE
+    • Run multiple raffles with multiple raffle holders and with different draw times.DONE
     • Allow ordinary users to select “lucky numbers” (i.e. a lottery option rather than just a raffle).
 It would be nice if the website would:
-    • Delete guest details as soon as the draw is complete.
-    • Have automated draws (i.e. they happen at the user-specified time without any further user intervention and winner announcements happen automatically immediately afterwards)
+    • Delete guest details as soon as the draw is complete.DONE
+    • Have automated draws (i.e. they happen at the user-specified time without any further user intervention and winner announcements happen automatically immediately afterwards)DONE
     • Maintain security of both user accounts and guest entry details.
     • Limit the number of times a particular lucky number (or combination of lucky numbers) can be assigned to a particular user. If more than one user can select a particular lucky number, then the prize must be shareable.

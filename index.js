@@ -9,6 +9,8 @@ const path  = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const cron = require('node-cron');
+
 
 
 
@@ -71,6 +73,8 @@ passport.use(new LocalStrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
 
+const {isLoggedIn} = require('./middleware')
+
 // connecting to mongo
 
 mongoose.connect('mongodb://localhost:27017/webSistems')
@@ -111,7 +115,7 @@ app.post('/createTicket', (req, res) => {
     const username = req.user ? req.user.username : 'Guest'; // If no user is logged in, set username to 'Anonymous'
 
     // Generate a ticket ID
-    const ticketId = generateTicketId(6);
+    const ticketId = req.body.ticketId;
 
     // Extract ticket data from the request body
     const ticketData = {
@@ -139,7 +143,9 @@ app.get('/prise/:id', async (req, res) => {
             req.flash('error', 'Prize not found');
             return res.redirect('/');
         }
-        res.render('priseDetails', { prise });
+        let array = [generateTicketId(6), generateTicketId(6), generateTicketId(6), generateTicketId(6), generateTicketId(6), generateTicketId(6)]
+        res.render('priseDetails', { prise, array });
+        
     } catch (error) {
         console.error('Error retrieving prize details:', error);
         req.flash('error', 'Error retrieving prize details');
@@ -175,6 +181,13 @@ app.post('/deleteTicket', async (req, res) => {
             req.flash('error', 'Ticket not found');
             return res.redirect('/findTicket'); // Redirect to the find ticket page
         }
+
+        if (req.isAuthenticated){
+            req.flash('success', 'Ticket Removed')
+            res.redirect('/profile')
+            return
+        }
+        
         req.flash('success', 'Ticket Removed')
         res.redirect('/')
     } catch (error) {
@@ -183,6 +196,58 @@ app.post('/deleteTicket', async (req, res) => {
         res.redirect('/findTicket'); // Redirect to the find ticket page
     }
 });
+//chatGBT generated
+cron.schedule('* * * * *', async () => {
+    try {
+        // Get all prizes
+        const prizes = await Prises.find();
+
+        // Iterate through each prize
+        for (const prize of prizes) {
+            // Check if the prize is in the past and not yet drawn
+            const now = new Date();
+            const prizeDate = new Date(prize.priseDate);
+            const prizeTime = prize.priseTime.split(':');
+            prizeDate.setHours(prizeTime[0], prizeTime[1], 0); // Set hours and minutes
+
+            // If the prize is in the past and not yet drawn
+            if (now.getTime() >= prizeDate.getTime() && !prize.draw) {
+                // Find all tickets associated with the prize that are not yet winners
+                const availableTickets = await Tickets.find({ priseId: prize._id, winner: false });
+
+                // If there are no available tickets, continue to the next prize
+                if (availableTickets.length === 0) {
+                    continue;
+                }
+
+                // Select a random ticket from the available tickets
+                const randomIndex = Math.floor(Math.random() * availableTickets.length);
+                const selectedTicket = availableTickets[randomIndex];
+
+                // Set the winner value of the selected ticket to true
+                selectedTicket.winner = true;
+                selectedTicket.priseActive = false;
+
+                // Save the updated ticket
+                await selectedTicket.save();
+
+                // Set the draw value of the prize to true
+                prize.draw = true;
+
+                // Save the updated prize
+                await prize.save();
+                await Tickets.updateMany({ priseId: selectedTicket.priseId }, { $set: { priseActive: false } });
+                
+
+                // Notify users about the winnerd
+               
+            }
+        }
+    } catch (error) {
+        console.error('Error choosing winner:', error);
+    }
+});
+
 
 
 app.listen(3000, () => {

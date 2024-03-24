@@ -9,6 +9,18 @@
     <%- include('../partials/navbar')%>
     <main class="container mt-5">
         <%- include('../partials/flash')%>
+        <div class="mb-3">
+            <% currentUserTickets.forEach(ticket => { %>
+                <% if(ticket.winner) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Congratulations! You won <%= ticket.prise %> ticket <%= ticket.ticketId %>!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <% } %>
+            <% }) %>
+            
 
         <!-- User Prizes Section -->
         <% if (isOwner) {%>
@@ -17,7 +29,7 @@
             <h2 class="mb-4">Your Entered Prizes</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <% currentUserPrises.forEach(prize => { %>
-                    <% if(!prize.draw){ %>
+                   
                     <div class="col">
                         <div class="card h-100">
                             <div class="card-body">
@@ -25,16 +37,37 @@
                                 <p class="card-text"><strong>Prize:</strong> <%= prize.prise %></p>
                                 <p class="card-text"><strong>Date:</strong> <%= prize.priseDate %></p>
                                 <p class="card-text"><strong>Time:</strong> <%= prize.priseTime %></p>
-                                <p class="card-text"><strong>Category:</strong> <%= prize.priseCategory %></p>
+                                <% if(!prize.draw){ %>
+                                
                                 <form action="/selectWinner" method="POST" class="validated-form" novalidate>
+                                   
                                     <div class="mb-3">
                                         <button class="btn btn-success btn-block">Choose winner</button>
                                         </div>
+                                        
+
                                 </form>
+                                <%  }else{%>
+                                    <p class="card-text"><strong>The prise is no longer active</strong> </p>
+                                    <form action="/deletePrise" method="POST" class="validated-form" novalidate>
+                                        
+                                        
+                                        <input type="hidden" name="priseId" value="<%= prize._id %>">
+
+
+                        
+                                
+                                        <div class="mb-3">
+                                            <button class="btn btn-success btn-block">Delete Prise</button>
+                                            </div>
+                                            
+    
+                                    </form>
+                                    <% } %>
                             </div>
                         </div>
                     </div>
-                    <%  }%>
+                    
                 <% }) %>
             </div>
         </div>

@@ -1,1 +1,1 @@
-next to do is to create a checking field in the prise page that checks if the ticket
+todo - update teh prise, so instead of not displaying it, add a text saying that it is no longer active and then adapt all the logic to that.

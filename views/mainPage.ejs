@@ -10,7 +10,7 @@
         <div class="container mt-5">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <% prises.forEach(prise => { %>
-                    <% if (!prise.draw){ %>
+                   
                     <div class="col">
                         <div class="card h-100">
                             <div class="card-body">
@@ -20,15 +20,21 @@
                                 <p class="card-text"><strong>Time:</strong> <%= prise.priseTime %></p>
                                 <p class="card-text"><strong>Category:</strong> <%= prise.priseCategory %></p>
                                 <!-- Link to prize page -->
+                                <% if(!prise.draw){ %>
                                 <div class="mb-3">
                                     <a href="/prise/<%= prise._id %>" class="btn btn-primary me-2">View Prize</a>
-                                    <!-- Form to create ticket -->
-                                    
                                 </div>
+                                    <% }else{ %>
+                                        <p class="card-text"><strong>The Draw is complete Check if you are a winner</strong> </p>
+                                        <a href="/findTicket" class="btn btn-primary me-2">Find Ticket</a>
+                                       
+                                    
+                                
+                                <% } %>
                             </div>
                         </div>
                     </div>
-                    <% } %>
+                    
                 <% }) %>
             </div>
         </div>

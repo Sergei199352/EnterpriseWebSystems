@@ -32,11 +32,19 @@
                                 <label class="form-label" for="email">Email</label>
                                 <input class="form-control" type="email" id="email" name="email" required>
                             <% } %>
+                            <div class="mb-3">
+                                <label for="ticketId" class="form-label">Select Ticket ID</label>
+                                <select class="form-select" id="ticketId" name="ticketId">
+                                    <% array.forEach(ticketId => { %>
+                                        <option value="<%= ticketId %>"><%= ticketId %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            
                             
                         </div>
                         <input type="hidden" name="username" value="<%= prise.username %>">
                         <input type="hidden" name="prise" value="<%= prise.prise %>">
-                        <input type="hidden" name="ticketId" value="<%= prise.ticketId %>">
                         <input type="hidden" name="priseDate" value="<%= prise.priseDate %>">
                         <input type="hidden" name="priseCategory" value="<%= prise.priseCategory %>">
                         <input type="hidden" name="priseId" value="<%= prise._id %>">

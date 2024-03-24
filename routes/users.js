@@ -8,6 +8,7 @@ const catchAsync = require('../utils/catchAsync')
 const {isLoggedIn} = require('../middleware')
 const {prizeOwner} = require('../middleware')
 
+
 const categories = ['Car', 'Phone', 'Ticket', 'Other'];
 router.get('/register', (req,res)=>{
     res.render('users/register')
@@ -34,6 +35,16 @@ router.get('/profile', isLoggedIn, async (req, res) => {
 
         // Fetch the tickets attached to the current user's username
         const currentUserTickets = await Tickets.find({ username: req.user.username });
+
+        // Check for unclaimed winnings
+        const unclaimedWinnings = currentUserTickets.filter(ticket => ticket.winner);
+
+        // Alert the user if they have unclaimed winnings
+        if (unclaimedWinnings.length > 0) {
+            
+            req.flash('success', 'Congratulations! You have unclaimed winnings. Please check your profile for details.');
+        }
+        req.flash('success', 'This is a test flash message.');
 
         res.render('users/profile', { currentUserPrises, currentUserTickets });
     } catch (error) {
@@ -63,6 +74,24 @@ router.post('/addPrise', prizeOwner, isLoggedIn, async (req, res) => {
     } catch (error) {
         console.error('Error saving prize:', error);
         res.status(500).send('Error saving prize');
+    }
+});
+router.post('/deletePrise', prizeOwner, isLoggedIn, async (req, res) => {
+    try {
+        // Delete the prize
+        const priseId = req.body.priseId;
+        await Prise.findByIdAndDelete(priseId);
+
+        // Delete all tickets with username "Anonimus" and the specified prize ID
+        await Tickets.deleteMany({ username: "Guest", priseId: priseId });
+
+        // Send a success message
+        req.flash('success', 'Prize and associated tickets deleted successfully');
+        res.redirect('/profile'); // Redirect to the profile page
+    } catch (error) {
+        console.error('Error deleting prize and tickets:', error);
+        req.flash('error', 'Error deleting prize and tickets');
+        res.redirect('/profile'); // Redirect to the profile page
     }
 });
 
@@ -130,8 +159,8 @@ router.get('/login', (req, res) =>{
 
 router.post('/login', passport.authenticate('local', {failureFlash:true, failureRedirect:'/login'}), (req, res)=>{
 
-    req.flash('success', 'welcome back');
-    res.redirect('/')
+   
+    res.redirect('/profile')
 
 })
 router.get('/logout', (req, res, next) => {
