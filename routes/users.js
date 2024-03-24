@@ -70,7 +70,7 @@ router.post('/addPrise', prizeOwner, isLoggedIn, async (req, res) => {
         };
         const prise = new Prise(priseData);
         await prise.save();
-        res.send(prise);
+        res.redirect('/profile')
     } catch (error) {
         console.error('Error saving prize:', error);
         res.status(500).send('Error saving prize');
